@@ -1,10 +1,13 @@
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Briefcase, LayoutDashboard, Sparkles, FileText, MessageSquare } from "lucide-react";
+import { Briefcase, LayoutDashboard, Sparkles, FileText, MessageSquare, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/lib/theme";
+import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   const [location] = useLocation();
+  const { resolvedTheme, toggle } = useTheme();
 
   const navItems = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -54,11 +57,26 @@ export function Navbar() {
             })}
           </div>
 
-          {/* Mobile menu could go here, but keeping it minimal for now */}
-          <div className="md:hidden flex items-center">
-             <Link href="/dashboard" className="text-sm font-medium text-primary hover:text-primary/80">
-               Dashboard
-             </Link>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggle}
+              aria-label="Toggle dark mode"
+              className="rounded-full w-9 h-9"
+            >
+              {resolvedTheme === "dark" ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </Button>
+
+            <div className="md:hidden">
+              <Link href="/dashboard" className="text-sm font-medium text-primary hover:text-primary/80">
+                Dashboard
+              </Link>
+            </div>
           </div>
         </div>
       </div>

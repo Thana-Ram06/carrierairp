@@ -5,18 +5,30 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ErrorResponse,
+  GenerateResumeRequest,
+  GenerateResumeResponse,
+  HealthStatus,
+  ImproveResumeRequest,
+  ImproveResumeResponse,
+  InterviewRequest,
+  InterviewResponse,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +111,264 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Uses AI to generate an ATS-friendly professional resume
+ * @summary Generate a professional resume
+ */
+export const getGenerateResumeUrl = () => {
+  return `/api/generate-resume`;
+};
+
+export const generateResume = async (
+  generateResumeRequest: GenerateResumeRequest,
+  options?: RequestInit,
+): Promise<GenerateResumeResponse> => {
+  return customFetch<GenerateResumeResponse>(getGenerateResumeUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(generateResumeRequest),
+  });
+};
+
+export const getGenerateResumeMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateResume>>,
+    TError,
+    { data: BodyType<GenerateResumeRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof generateResume>>,
+  TError,
+  { data: BodyType<GenerateResumeRequest> },
+  TContext
+> => {
+  const mutationKey = ["generateResume"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof generateResume>>,
+    { data: BodyType<GenerateResumeRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return generateResume(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type GenerateResumeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof generateResume>>
+>;
+export type GenerateResumeMutationBody = BodyType<GenerateResumeRequest>;
+export type GenerateResumeMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Generate a professional resume
+ */
+export const useGenerateResume = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateResume>>,
+    TError,
+    { data: BodyType<GenerateResumeRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof generateResume>>,
+  TError,
+  { data: BodyType<GenerateResumeRequest> },
+  TContext
+> => {
+  return useMutation(getGenerateResumeMutationOptions(options));
+};
+
+/**
+ * Uses AI to professionally rewrite and improve an existing resume
+ * @summary Improve an existing resume
+ */
+export const getImproveResumeUrl = () => {
+  return `/api/improve-resume`;
+};
+
+export const improveResume = async (
+  improveResumeRequest: ImproveResumeRequest,
+  options?: RequestInit,
+): Promise<ImproveResumeResponse> => {
+  return customFetch<ImproveResumeResponse>(getImproveResumeUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(improveResumeRequest),
+  });
+};
+
+export const getImproveResumeMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof improveResume>>,
+    TError,
+    { data: BodyType<ImproveResumeRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof improveResume>>,
+  TError,
+  { data: BodyType<ImproveResumeRequest> },
+  TContext
+> => {
+  const mutationKey = ["improveResume"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof improveResume>>,
+    { data: BodyType<ImproveResumeRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return improveResume(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type ImproveResumeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof improveResume>>
+>;
+export type ImproveResumeMutationBody = BodyType<ImproveResumeRequest>;
+export type ImproveResumeMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Improve an existing resume
+ */
+export const useImproveResume = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof improveResume>>,
+    TError,
+    { data: BodyType<ImproveResumeRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof improveResume>>,
+  TError,
+  { data: BodyType<ImproveResumeRequest> },
+  TContext
+> => {
+  return useMutation(getImproveResumeMutationOptions(options));
+};
+
+/**
+ * Uses AI to generate relevant interview questions and answers for a given role
+ * @summary Generate interview questions and answers
+ */
+export const getGenerateInterviewQuestionsUrl = () => {
+  return `/api/interview`;
+};
+
+export const generateInterviewQuestions = async (
+  interviewRequest: InterviewRequest,
+  options?: RequestInit,
+): Promise<InterviewResponse> => {
+  return customFetch<InterviewResponse>(getGenerateInterviewQuestionsUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(interviewRequest),
+  });
+};
+
+export const getGenerateInterviewQuestionsMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateInterviewQuestions>>,
+    TError,
+    { data: BodyType<InterviewRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof generateInterviewQuestions>>,
+  TError,
+  { data: BodyType<InterviewRequest> },
+  TContext
+> => {
+  const mutationKey = ["generateInterviewQuestions"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof generateInterviewQuestions>>,
+    { data: BodyType<InterviewRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return generateInterviewQuestions(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type GenerateInterviewQuestionsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof generateInterviewQuestions>>
+>;
+export type GenerateInterviewQuestionsMutationBody = BodyType<InterviewRequest>;
+export type GenerateInterviewQuestionsMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Generate interview questions and answers
+ */
+export const useGenerateInterviewQuestions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateInterviewQuestions>>,
+    TError,
+    { data: BodyType<InterviewRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof generateInterviewQuestions>>,
+  TError,
+  { data: BodyType<InterviewRequest> },
+  TContext
+> => {
+  return useMutation(getGenerateInterviewQuestionsMutationOptions(options));
+};

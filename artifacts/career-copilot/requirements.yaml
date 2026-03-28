@@ -1,0 +1,16 @@
+packages:
+  "framer-motion": "For smooth page transitions and micro-interactions"
+  "react-hook-form": "For form state management"
+  "@hookform/resolvers": "For zod validation with react-hook-form"
+  "clsx": "For conditional class names"
+  "tailwind-merge": "For merging tailwind classes safely"
+
+images:
+  - path: "artifacts/career-copilot/public/images/hero-abstract.png"
+    description: "A minimal, premium, abstract 3D geometric shape with a subtle green accent, soft studio lighting, ultra clean white background, SaaS aesthetic"
+    aspect_ratio: "16:9"
+
+notes:
+  - App relies on generated orval hooks from @workspace/api-client-react
+  - Stateless design, no database required
+  - The OPENAI_API_KEY environment variable is expected by the backend

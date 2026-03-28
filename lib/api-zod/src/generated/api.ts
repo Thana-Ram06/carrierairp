@@ -14,3 +14,53 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Uses AI to generate an ATS-friendly professional resume
+ * @summary Generate a professional resume
+ */
+export const GenerateResumeBody = zod.object({
+  name: zod.string().describe("Full name of the candidate"),
+  skills: zod.string().describe("Comma-separated list of skills"),
+  experience: zod.string().describe("Work experience description"),
+  education: zod.string().describe("Education background"),
+});
+
+export const GenerateResumeResponse = zod.object({
+  resume: zod.string().describe("The generated resume content"),
+});
+
+/**
+ * Uses AI to professionally rewrite and improve an existing resume
+ * @summary Improve an existing resume
+ */
+export const ImproveResumeBody = zod.object({
+  resumeText: zod.string().describe("The existing resume text to improve"),
+});
+
+export const ImproveResumeResponse = zod.object({
+  improvedResume: zod.string().describe("The improved resume content"),
+});
+
+/**
+ * Uses AI to generate relevant interview questions and answers for a given role
+ * @summary Generate interview questions and answers
+ */
+export const GenerateInterviewQuestionsBody = zod.object({
+  role: zod.string().describe("Job role or position title"),
+  skills: zod
+    .string()
+    .optional()
+    .describe("Relevant skills for the role (optional)"),
+});
+
+export const GenerateInterviewQuestionsResponse = zod.object({
+  questions: zod
+    .array(
+      zod.object({
+        question: zod.string().describe("Interview question"),
+        answer: zod.string().describe("Suggested answer"),
+      }),
+    )
+    .describe("List of interview questions with answers"),
+});

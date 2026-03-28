@@ -8,3 +8,53 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface GenerateResumeRequest {
+  /** Full name of the candidate */
+  name: string;
+  /** Comma-separated list of skills */
+  skills: string;
+  /** Work experience description */
+  experience: string;
+  /** Education background */
+  education: string;
+}
+
+export interface GenerateResumeResponse {
+  /** The generated resume content */
+  resume: string;
+}
+
+export interface ImproveResumeRequest {
+  /** The existing resume text to improve */
+  resumeText: string;
+}
+
+export interface ImproveResumeResponse {
+  /** The improved resume content */
+  improvedResume: string;
+}
+
+export interface InterviewRequest {
+  /** Job role or position title */
+  role: string;
+  /** Relevant skills for the role (optional) */
+  skills?: string;
+}
+
+export interface InterviewQA {
+  /** Interview question */
+  question: string;
+  /** Suggested answer */
+  answer: string;
+}
+
+export interface InterviewResponse {
+  /** List of interview questions with answers */
+  questions: InterviewQA[];
+}
+
+export interface ErrorResponse {
+  /** Error message */
+  error: string;
+}

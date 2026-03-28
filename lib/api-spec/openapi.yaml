@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: ai
+    description: AI-powered career tools
 paths:
   /healthz:
     get:
@@ -24,6 +26,99 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /generate-resume:
+    post:
+      operationId: generateResume
+      tags: [ai]
+      summary: Generate a professional resume
+      description: Uses AI to generate an ATS-friendly professional resume
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateResumeRequest"
+      responses:
+        "200":
+          description: Generated resume
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateResumeResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /improve-resume:
+    post:
+      operationId: improveResume
+      tags: [ai]
+      summary: Improve an existing resume
+      description: Uses AI to professionally rewrite and improve an existing resume
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImproveResumeRequest"
+      responses:
+        "200":
+          description: Improved resume
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImproveResumeResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /interview:
+    post:
+      operationId: generateInterviewQuestions
+      tags: [ai]
+      summary: Generate interview questions and answers
+      description: Uses AI to generate relevant interview questions and answers for a given role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InterviewRequest"
+      responses:
+        "200":
+          description: Interview questions and answers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterviewResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +128,88 @@ components:
           type: string
       required:
         - status
-
+    GenerateResumeRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full name of the candidate
+        skills:
+          type: string
+          description: Comma-separated list of skills
+        experience:
+          type: string
+          description: Work experience description
+        education:
+          type: string
+          description: Education background
+      required:
+        - name
+        - skills
+        - experience
+        - education
+    GenerateResumeResponse:
+      type: object
+      properties:
+        resume:
+          type: string
+          description: The generated resume content
+      required:
+        - resume
+    ImproveResumeRequest:
+      type: object
+      properties:
+        resumeText:
+          type: string
+          description: The existing resume text to improve
+      required:
+        - resumeText
+    ImproveResumeResponse:
+      type: object
+      properties:
+        improvedResume:
+          type: string
+          description: The improved resume content
+      required:
+        - improvedResume
+    InterviewRequest:
+      type: object
+      properties:
+        role:
+          type: string
+          description: Job role or position title
+        skills:
+          type: string
+          description: Relevant skills for the role (optional)
+      required:
+        - role
+    InterviewResponse:
+      type: object
+      properties:
+        questions:
+          type: array
+          description: List of interview questions with answers
+          items:
+            $ref: "#/components/schemas/InterviewQA"
+      required:
+        - questions
+    InterviewQA:
+      type: object
+      properties:
+        question:
+          type: string
+          description: Interview question
+        answer:
+          type: string
+          description: Suggested answer
+      required:
+        - question
+        - answer
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+      required:
+        - error

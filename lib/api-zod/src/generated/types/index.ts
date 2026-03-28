@@ -6,4 +6,12 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./errorResponse";
+export * from "./generateResumeRequest";
+export * from "./generateResumeResponse";
 export * from "./healthStatus";
+export * from "./improveResumeRequest";
+export * from "./improveResumeResponse";
+export * from "./interviewQA";
+export * from "./interviewRequest";
+export * from "./interviewResponse";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
-import { Button } from "./Button";
+import { Button } from "./button";
 import { motion } from "framer-motion";
 
 interface OutputCardProps {

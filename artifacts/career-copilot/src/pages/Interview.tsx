@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Layout } from "@/components/Layout";
 import { FormInput, FormTextarea } from "@/components/ui/FormInput";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { OutputCard } from "@/components/ui/OutputCard";
 import { DataLossWarning } from "@/components/DataLossWarning";
 import { useGenerateInterviewQuestions } from "@workspace/api-client-react";

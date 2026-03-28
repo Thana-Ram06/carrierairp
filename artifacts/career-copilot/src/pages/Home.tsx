@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, FileText, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 

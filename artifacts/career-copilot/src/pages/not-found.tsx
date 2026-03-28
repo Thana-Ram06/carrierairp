@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
 export default function NotFound() {

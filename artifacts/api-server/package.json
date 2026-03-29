@@ -16,7 +16,7 @@
     "cors": "^2",
     "drizzle-orm": "catalog:",
     "express": "^5",
-    "openai": "^6.33.0",
+    "@google/generative-ai": "^0.24.0",
     "pino": "^9",
     "pino-http": "^10"
   },

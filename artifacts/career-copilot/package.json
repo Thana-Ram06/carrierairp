@@ -10,7 +10,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "openai": "^6.33.0"
+    "@google/generative-ai": "^0.24.0"
   },
   "devDependencies": {
     "@hookform/resolvers": "^3.10.0",

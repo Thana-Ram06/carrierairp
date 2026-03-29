@@ -19,9 +19,15 @@ export function Layout({ children, className = "" }: { children: ReactNode; clas
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} CareerAI — AI-powered career tools</p>
           <p className="text-center sm:text-right">
-            <span className="font-medium text-foreground/70">Deploying?</span>{" "}
-            Set your <code className="bg-muted px-1.5 py-0.5 rounded text-[11px] font-mono">OPENAI_API_KEY</code>{" "}
-            environment variable in your hosting provider (e.g. Vercel → Project Settings → Environment Variables).
+            Made by{" "}
+            <a
+              href="https://x.com/anoinv?s=21"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground/70 hover:text-foreground underline-offset-2 hover:underline transition-colors duration-150"
+            >
+              me
+            </a>
           </p>
         </div>
       </footer>
